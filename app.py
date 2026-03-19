@@ -21,76 +21,82 @@ st.markdown("""
         font-family: 'Inter', sans-serif;
     }
     
-    /* Premium Header */
+    /* Subtle Glassmorphism Header */
     .main-header {
-        background: linear-gradient(90deg, #1e3a8a 0%, #3b82f6 100%);
-        padding: 2rem;
-        border-radius: 15px;
+        background-color: rgba(30, 41, 59, 0.4);
+        padding: 1.5rem;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
         color: white;
         text-align: center;
         margin-bottom: 2rem;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        animation: fadeIn 1.5s ease;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        animation: fadeIn 1.2s ease;
     }
     
     .header-title {
-        font-size: 2.5rem;
-        font-weight: 800;
-        margin-bottom: 0.5rem;
-        letter-spacing: -1px;
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 0.2rem;
+        letter-spacing: -0.5px;
+        color: #ffffff;
     }
     
     .header-subtitle {
-        font-size: 1.1rem;
-        opacity: 0.9;
-        font-weight: 300;
+        font-size: 0.95rem;
+        opacity: 0.7;
+        font-weight: 400;
+        letter-spacing: 0.5px;
+        color: #94a3b8;
     }
 
     /* Metric Cards Styling */
     [data-testid="stMetricValue"] {
-        font-size: 1.8rem !important;
+        font-size: 1.6rem !important;
         font-weight: 700 !important;
-        color: #3b82f6 !important;
+        color: #ffffff !important;
     }
     
     [data-testid="stMetricLabel"] {
-        font-size: 0.9rem !important;
+        font-size: 0.8rem !important;
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 1.2px;
         color: #94a3b8 !important;
     }
 
     /* Animations */
     @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(-20px); }
+        from { opacity: 0; transform: translateY(-10px); }
         to { opacity: 1; transform: translateY(0); }
     }
     
     /* Tab Styling */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 10px;
+        gap: 12px;
         background-color: transparent;
     }
     
     .stTabs [data-baseweb="tab"] {
-        height: 50px;
+        height: 44px;
         white-space: pre-wrap;
         background-color: #1e293b;
-        border-radius: 10px 10px 0px 0px;
-        color: white;
+        border-radius: 8px 8px 0px 0px;
+        color: #94a3b8;
         padding-left: 20px;
         padding-right: 20px;
         border: none;
+        transition: all 0.3s ease;
     }
     
     .stTabs [aria-selected="true"] {
         background-color: #3b82f6 !important;
         color: white !important;
+        transform: scale(1.02);
     }
 </style>
 """, unsafe_allow_html=True)
 
-# Premium Header Setup
+# Refined Header Setup
 st.markdown("""
     <div class="main-header">
         <div class="header-title">📈 Indian Equities Analytics</div>
