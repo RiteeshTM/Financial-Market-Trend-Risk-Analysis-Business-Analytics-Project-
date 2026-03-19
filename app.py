@@ -12,9 +12,91 @@ import datetime
 st.set_page_config(page_title="Indian Equities Dashboard", layout="wide", page_icon="📈")
 plt.style.use('dark_background')
 
-# Title and Description
-st.title("📈 Indian Equities Analytics Dashboard")
-st.markdown("A comprehensive financial dashboard analyzing selected major Indian stocks against the NIFTY 50 benchmark.")
+# Custom CSS for Premium Look
+st.markdown("""
+<style>
+    /* Main Background and Font */
+    .stApp {
+        background-color: #0e1117;
+        font-family: 'Inter', sans-serif;
+    }
+    
+    /* Premium Header */
+    .main-header {
+        background: linear-gradient(90deg, #1e3a8a 0%, #3b82f6 100%);
+        padding: 2rem;
+        border-radius: 15px;
+        color: white;
+        text-align: center;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        animation: fadeIn 1.5s ease;
+    }
+    
+    .header-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        letter-spacing: -1px;
+    }
+    
+    .header-subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        font-weight: 300;
+    }
+
+    /* Metric Cards Styling */
+    [data-testid="stMetricValue"] {
+        font-size: 1.8rem !important;
+        font-weight: 700 !important;
+        color: #3b82f6 !important;
+    }
+    
+    [data-testid="stMetricLabel"] {
+        font-size: 0.9rem !important;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #94a3b8 !important;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Tab Styling */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 10px;
+        background-color: transparent;
+    }
+    
+    .stTabs [data-baseweb="tab"] {
+        height: 50px;
+        white-space: pre-wrap;
+        background-color: #1e293b;
+        border-radius: 10px 10px 0px 0px;
+        color: white;
+        padding-left: 20px;
+        padding-right: 20px;
+        border: none;
+    }
+    
+    .stTabs [aria-selected="true"] {
+        background-color: #3b82f6 !important;
+        color: white !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# Premium Header Setup
+st.markdown("""
+    <div class="main-header">
+        <div class="header-title">📈 Indian Equities Analytics</div>
+        <div class="header-subtitle">Advanced Financial Trend & Risk Analysis Dashboard</div>
+    </div>
+""", unsafe_allow_html=True)
 
 # Sidebar Configuration
 st.sidebar.header("Configuration")

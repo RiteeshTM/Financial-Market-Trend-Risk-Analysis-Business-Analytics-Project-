@@ -65,8 +65,10 @@ def test_streamlit_app_renders():
     # Check that there are no exceptions
     assert not at.exception
     
-    # Check title
-    assert "Indian Equities Analytics Dashboard" in at.title[0].value
+    # Check title/header
+    # The header is now in markdown (st.markdown), check if it's present
+    header_found = any("Indian Equities Analytics" in m.value for m in at.markdown)
+    assert header_found
     
     # Check metrics
     metrics = at.metric
