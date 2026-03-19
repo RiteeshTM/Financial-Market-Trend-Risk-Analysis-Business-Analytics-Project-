@@ -234,15 +234,15 @@ with tab1:
     st.pyplot(fig2)
 
 with tab2:
-    rolling_vol = data["log_return"].rolling(window=126).std() * np.sqrt(252)
+    rolling_vol = data["log_return"].rolling(window=30).std() * np.sqrt(252)
     avg_vol = data["log_return"].std() * np.sqrt(252)
     fig, ax = plt.subplots(figsize=(10,5))
-    ax.plot(rolling_vol.index, rolling_vol, color='#dd8452', linewidth=2, label='Volatility')
-    ax.axhline(y=avg_vol, color='#4c72b0', linestyle='--', linewidth=2, label='Average volatility')
+    ax.plot(rolling_vol.index, rolling_vol, color='#dd8452', linewidth=2, label='30-Day Rolling Volatility')
+    ax.axhline(y=avg_vol, color='#4c72b0', linestyle='--', linewidth=2, label='Average Volatility')
     ax.axhline(y=0, color='gray', linestyle='--', linewidth=1)
-    ax.set_title("Rolling volatility (6-month)")
+    ax.set_title("Rolling Volatility (30-Day)")
     ax.set_xlabel("")
-    ax.set_ylabel("Volatility")
+    ax.set_ylabel("Volatility (Annualised)")
     ax.legend()
     fig.autofmt_xdate()
     st.pyplot(fig)
@@ -261,7 +261,7 @@ with tab3:
 
 with tab4:
     fig, ax = plt.subplots(figsize=(8,5))
-    sns.histplot(data["log_return"], bins=50, kde=True, ax=ax)
+    sns.histplot(data["log_return"], bins=100, kde=True, ax=ax)
     ax.set_title("Distribution of Log Returns")
     st.pyplot(fig)
 
