@@ -16,33 +16,31 @@ st.markdown("""
 <style>
     /* Theme Variables */
     :root {
-        --header-bg: rgba(30, 41, 59, 1);
+        --header-bg: #1e293b;
         --header-border: rgba(255, 255, 255, 0.2);
         --header-text: #ffffff;
         --subtitle-text: #94a3b8;
-        --metric-val: #ffffff;
-        --metric-label: #cbd5e1;
-        --tab-bg: #1e293b;
+        --metric-val: #3b82f6;  /* Blue accents for dark mode */
+        --metric-label: #94a3b8;
     }
 
     @media (prefers-color-scheme: light) {
         :root {
-            --header-bg: #f8fafc;
-            --header-border: #e2e8f0;
+            --header-bg: #f1f5f9;
+            --header-border: #cbd5e1;
             --header-text: #0f172a;
-            --subtitle-text: #475569;
-            --metric-val: #0f172a;
-            --metric-label: #475569;
-            --tab-bg: #f1f5f9;
+            --subtitle-text: #334155;
+            --metric-val: #1e3a8a !important; /* High contrast dark blue */
+            --metric-label: #0f172a !important; /* Pure dark for visibility */
         }
     }
 
     .main-header {
-        background-color: var(--header-bg);
-        border: 1px solid var(--header-border);
+        background-color: var(--header-bg) !important;
+        border: 2px solid var(--header-border) !important;
         padding: 1.5rem;
         border-radius: 12px;
-        color: var(--header-text);
+        color: var(--header-text) !important;
         text-align: center;
         margin-bottom: 2rem;
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -53,32 +51,31 @@ st.markdown("""
         font-size: 2.2rem;
         font-weight: 700;
         margin-bottom: 0.2rem;
-        letter-spacing: -0.5px;
+        color: var(--header-text) !important;
     }
     
     .header-subtitle {
         font-size: 0.95rem;
-        font-weight: 450;
-        letter-spacing: 0.5px;
-        color: var(--subtitle-text);
+        font-weight: 500;
+        color: var(--subtitle-text) !important;
         opacity: 1 !important;
     }
 
-    /* Metric Cards Styling */
+    /* FORCING HIGH CONTRAST ON METRICS */
     [data-testid="stMetricValue"] {
-        font-size: 1.6rem !important;
-        font-weight: 700 !important;
+        font-size: 1.8rem !important;
+        font-weight: 800 !important;
         color: var(--metric-val) !important;
     }
     
     [data-testid="stMetricLabel"] {
-        font-size: 0.8rem !important;
+        font-size: 0.85rem !important;
         text-transform: uppercase;
-        letter-spacing: 1.2px;
+        letter-spacing: 1.5px;
+        font-weight: 700 !important;
         color: var(--metric-label) !important;
         opacity: 1 !important;
     }
-
     @keyframes fadeIn {
         from { opacity: 0; transform: translateY(-10px); }
         to { opacity: 1; transform: translateY(0); }
@@ -91,9 +88,9 @@ st.markdown("""
     
     .stTabs [data-baseweb="tab"] {
         height: 44px;
-        background-color: var(--tab-bg);
+        background-color: var(--header-bg) !important;
         border-radius: 8px 8px 0px 0px;
-        color: var(--subtitle-text);
+        color: var(--header-text) !important;
         padding: 0 20px;
         border: none;
         transition: all 0.3s ease;
