@@ -12,25 +12,47 @@ import datetime
 st.set_page_config(page_title="Indian Equities Dashboard", layout="wide", page_icon="📈")
 plt.style.use('dark_background')
 
-# Custom CSS for Premium Look
+# Custom CSS for Premium, Responsive UI
 st.markdown("""
 <style>
+    /* Theme Variables */
+    :root {
+        --header-bg: rgba(30, 41, 59, 0.4);
+        --header-border: rgba(255, 255, 255, 0.1);
+        --header-text: #ffffff;
+        --subtitle-text: #94a3b8;
+        --metric-val: #ffffff;
+        --metric-label: #94a3b8;
+        --tab-bg: #1e293b;
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --header-bg: rgba(241, 245, 249, 0.8);
+            --header-border: rgba(15, 23, 42, 0.1);
+            --header-text: #0f172a;
+            --subtitle-text: #475569;
+            --metric-val: #0f172a;
+            --metric-label: #64748b;
+            --tab-bg: #f1f5f9;
+        }
+    }
+
     /* Main Background and Font */
     .stApp {
-        background-color: #0e1117;
         font-family: 'Inter', sans-serif;
     }
     
     /* Subtle Glassmorphism Header */
     .main-header {
-        background-color: rgba(30, 41, 59, 0.4);
+        background-color: var(--header-bg);
         padding: 1.5rem;
         border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: white;
+        border: 1px solid var(--header-border);
+        color: var(--header-text);
         text-align: center;
         margin-bottom: 2rem;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         animation: fadeIn 1.2s ease;
     }
     
@@ -39,29 +61,28 @@ st.markdown("""
         font-weight: 700;
         margin-bottom: 0.2rem;
         letter-spacing: -0.5px;
-        color: #ffffff;
     }
     
     .header-subtitle {
         font-size: 0.95rem;
-        opacity: 0.7;
+        opacity: 0.8;
         font-weight: 400;
         letter-spacing: 0.5px;
-        color: #94a3b8;
+        color: var(--subtitle-text);
     }
 
     /* Metric Cards Styling */
     [data-testid="stMetricValue"] {
         font-size: 1.6rem !important;
         font-weight: 700 !important;
-        color: #ffffff !important;
+        color: var(--metric-val) !important;
     }
     
     [data-testid="stMetricLabel"] {
         font-size: 0.8rem !important;
         text-transform: uppercase;
         letter-spacing: 1.2px;
-        color: #94a3b8 !important;
+        color: var(--metric-label) !important;
     }
 
     /* Animations */
@@ -79,9 +100,9 @@ st.markdown("""
     .stTabs [data-baseweb="tab"] {
         height: 44px;
         white-space: pre-wrap;
-        background-color: #1e293b;
+        background-color: var(--tab-bg);
         border-radius: 8px 8px 0px 0px;
-        color: #94a3b8;
+        color: var(--subtitle-text);
         padding-left: 20px;
         padding-right: 20px;
         border: none;
