@@ -9,7 +9,19 @@ from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.arima.model import ARIMA
 import datetime
 st.set_page_config(page_title="Indian Equities Dashboard", layout="wide", page_icon="📈")
-plt.style.use('fivethirtyeight')
+
+# High-Contrast Chart Styling
+plt.style.use('seaborn-v0_8-whitegrid')
+plt.rcParams.update({
+    'text.color': '#1e293b',
+    'axes.labelcolor': '#1e293b',
+    'xtick.color': '#475569',
+    'ytick.color': '#475569',
+    'axes.titlecolor': '#0f172a',
+    'axes.titlesize': 16,
+    'axes.labelsize': 12,
+    'grid.color': '#e2e8f0'
+})
 
 # Custom CSS for Premium, Responsive UI
 st.markdown("""
