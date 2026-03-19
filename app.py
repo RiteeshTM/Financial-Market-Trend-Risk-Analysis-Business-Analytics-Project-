@@ -122,12 +122,18 @@ def load_data(ticker_symbol, start, end):
     if isinstance(data.columns, pd.MultiIndex):
         data.columns = data.columns.get_level_values(0)
     data.columns.name = None
-    
+    # Remove duplicate columns that yfinance occasionally emits for some tickers
+    data = data.loc[:, ~data.columns.duplicated()]
+
+    # Ensure Close column exists and has valid data
+    if "Close" not in data.columns or data["Close"].dropna().empty:
+        raise ValueError(f"No valid 'Close' price data returned for {ticker_symbol}. Try adjusting the date range.")
+
     # Calculate returns
     data["simple_return"] = data["Close"].pct_change()
     data["log_return"] = np.log(data["Close"] / data["Close"].shift(1))
-    
-    return data.dropna()
+
+    return data.dropna(subset=["Close", "log_return"])
 
 @st.cache_data
 def load_market(start, end):
@@ -135,17 +141,22 @@ def load_market(start, end):
     if isinstance(market.columns, pd.MultiIndex):
         market.columns = market.columns.get_level_values(0)
     market.columns.name = None
+    market = market.loc[:, ~market.columns.duplicated()]
     market["market_return"] = np.log(market["Close"] / market["Close"].shift(1))
-    return market.dropna()
+    return market.dropna(subset=["market_return"])
 
 data_load_state = st.text('Loading data...')
 try:
     data = load_data(ticker, start_date, end_date)
     market = load_market(start_date, end_date)
+    if data.empty:
+        st.error(f"No data returned for {selected_stock}. Please try a different date range.")
+        st.stop()
     data_load_state.text('Data loaded successfully!')
     st.sidebar.success("Data loaded successfully!")
 except Exception as e:
     data_load_state.text(f"Error loading data: {e}")
+    st.error(str(e))
     st.stop()
     
 # Layout Metrics
@@ -154,7 +165,8 @@ daily_volatility = data["log_return"].std()
 annual_volatility = daily_volatility * np.sqrt(252)
 annual_return = data["log_return"].mean() * 252
 sharpe_ratio = (annual_return - risk_free_rate) / annual_volatility
-VaR_95 = np.percentile(data["log_return"], 5)
+log_returns_clean = data["log_return"].dropna()
+VaR_95 = np.percentile(log_returns_clean, 5) if not log_returns_clean.empty else 0.0
 
 # Beta Calculation
 df_beta = pd.concat([data["log_return"], market["market_return"]], axis=1).dropna()
