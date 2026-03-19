@@ -8,47 +8,40 @@ import statsmodels.api as sm
 from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.arima.model import ARIMA
 import datetime
-
 st.set_page_config(page_title="Indian Equities Dashboard", layout="wide", page_icon="📈")
-plt.style.use('dark_background')
+plt.style.use('fivethirtyeight')
 
 # Custom CSS for Premium, Responsive UI
 st.markdown("""
 <style>
     /* Theme Variables */
     :root {
-        --header-bg: rgba(30, 41, 59, 0.4);
-        --header-border: rgba(255, 255, 255, 0.1);
+        --header-bg: rgba(30, 41, 59, 1);
+        --header-border: rgba(255, 255, 255, 0.2);
         --header-text: #ffffff;
         --subtitle-text: #94a3b8;
         --metric-val: #ffffff;
-        --metric-label: #94a3b8;
+        --metric-label: #cbd5e1;
         --tab-bg: #1e293b;
     }
 
     @media (prefers-color-scheme: light) {
         :root {
-            --header-bg: rgba(241, 245, 249, 0.8);
-            --header-border: rgba(15, 23, 42, 0.1);
+            --header-bg: #f8fafc;
+            --header-border: #e2e8f0;
             --header-text: #0f172a;
             --subtitle-text: #475569;
             --metric-val: #0f172a;
-            --metric-label: #64748b;
+            --metric-label: #475569;
             --tab-bg: #f1f5f9;
         }
     }
 
-    /* Main Background and Font */
-    .stApp {
-        font-family: 'Inter', sans-serif;
-    }
-    
-    /* Subtle Glassmorphism Header */
     .main-header {
         background-color: var(--header-bg);
+        border: 1px solid var(--header-border);
         padding: 1.5rem;
         border-radius: 12px;
-        border: 1px solid var(--header-border);
         color: var(--header-text);
         text-align: center;
         margin-bottom: 2rem;
@@ -65,10 +58,10 @@ st.markdown("""
     
     .header-subtitle {
         font-size: 0.95rem;
-        opacity: 0.8;
-        font-weight: 400;
+        font-weight: 450;
         letter-spacing: 0.5px;
         color: var(--subtitle-text);
+        opacity: 1 !important;
     }
 
     /* Metric Cards Styling */
@@ -83,15 +76,14 @@ st.markdown("""
         text-transform: uppercase;
         letter-spacing: 1.2px;
         color: var(--metric-label) !important;
+        opacity: 1 !important;
     }
 
-    /* Animations */
     @keyframes fadeIn {
         from { opacity: 0; transform: translateY(-10px); }
         to { opacity: 1; transform: translateY(0); }
     }
     
-    /* Tab Styling */
     .stTabs [data-baseweb="tab-list"] {
         gap: 12px;
         background-color: transparent;
@@ -99,12 +91,10 @@ st.markdown("""
     
     .stTabs [data-baseweb="tab"] {
         height: 44px;
-        white-space: pre-wrap;
         background-color: var(--tab-bg);
         border-radius: 8px 8px 0px 0px;
         color: var(--subtitle-text);
-        padding-left: 20px;
-        padding-right: 20px;
+        padding: 0 20px;
         border: none;
         transition: all 0.3s ease;
     }
@@ -112,7 +102,6 @@ st.markdown("""
     .stTabs [aria-selected="true"] {
         background-color: #3b82f6 !important;
         color: white !important;
-        transform: scale(1.02);
     }
 </style>
 """, unsafe_allow_html=True)
