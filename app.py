@@ -8,79 +8,104 @@ import statsmodels.api as sm
 from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.arima.model import ARIMA
 import datetime
-
 st.set_page_config(page_title="Indian Equities Dashboard", layout="wide", page_icon="📈")
-plt.style.use('dark_background')
 
-# Custom CSS for Premium Look
+# High-Contrast Chart Styling
+plt.style.use('seaborn-v0_8-whitegrid')
+plt.rcParams.update({
+    'text.color': '#1e293b',
+    'axes.labelcolor': '#1e293b',
+    'xtick.color': '#475569',
+    'ytick.color': '#475569',
+    'axes.titlecolor': '#0f172a',
+    'axes.titlesize': 16,
+    'axes.labelsize': 12,
+    'grid.color': '#e2e8f0'
+})
+
+# Custom CSS for Premium, Responsive UI
 st.markdown("""
 <style>
-    /* Main Background and Font */
-    .stApp {
-        background-color: #0e1117;
-        font-family: 'Inter', sans-serif;
+    /* Theme Variables */
+    :root {
+        --header-bg: #1e293b;
+        --header-border: rgba(255, 255, 255, 0.2);
+        --header-text: #ffffff;
+        --subtitle-text: #94a3b8;
+        --metric-val: #3b82f6;  /* Blue accents for dark mode */
+        --metric-label: #94a3b8;
     }
-    
-    /* Premium Header */
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --header-bg: #f1f5f9;
+            --header-border: #cbd5e1;
+            --header-text: #0f172a;
+            --subtitle-text: #334155;
+            --metric-val: #1e3a8a !important; /* High contrast dark blue */
+            --metric-label: #0f172a !important; /* Pure dark for visibility */
+        }
+    }
+
     .main-header {
-        background: linear-gradient(90deg, #1e3a8a 0%, #3b82f6 100%);
-        padding: 2rem;
-        border-radius: 15px;
-        color: white;
+        background-color: var(--header-bg) !important;
+        border: 2px solid var(--header-border) !important;
+        padding: 1.5rem;
+        border-radius: 12px;
+        color: var(--header-text) !important;
         text-align: center;
         margin-bottom: 2rem;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        animation: fadeIn 1.5s ease;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 1.2s ease;
     }
     
     .header-title {
-        font-size: 2.5rem;
-        font-weight: 800;
-        margin-bottom: 0.5rem;
-        letter-spacing: -1px;
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 0.2rem;
+        color: var(--header-text) !important;
     }
     
     .header-subtitle {
-        font-size: 1.1rem;
-        opacity: 0.9;
-        font-weight: 300;
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: var(--subtitle-text) !important;
+        opacity: 1 !important;
     }
 
-    /* Metric Cards Styling */
+    /* FORCING HIGH CONTRAST ON METRICS */
     [data-testid="stMetricValue"] {
         font-size: 1.8rem !important;
-        font-weight: 700 !important;
-        color: #3b82f6 !important;
+        font-weight: 800 !important;
+        color: var(--metric-val) !important;
     }
     
     [data-testid="stMetricLabel"] {
-        font-size: 0.9rem !important;
+        font-size: 0.85rem !important;
         text-transform: uppercase;
-        letter-spacing: 1px;
-        color: #94a3b8 !important;
+        letter-spacing: 1.5px;
+        font-weight: 700 !important;
+        color: var(--metric-label) !important;
+        opacity: 1 !important;
     }
-
-    /* Animations */
     @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(-20px); }
+        from { opacity: 0; transform: translateY(-10px); }
         to { opacity: 1; transform: translateY(0); }
     }
     
-    /* Tab Styling */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 10px;
+        gap: 12px;
         background-color: transparent;
     }
     
     .stTabs [data-baseweb="tab"] {
-        height: 50px;
-        white-space: pre-wrap;
-        background-color: #1e293b;
-        border-radius: 10px 10px 0px 0px;
-        color: white;
-        padding-left: 20px;
-        padding-right: 20px;
+        height: 44px;
+        background-color: var(--header-bg) !important;
+        border-radius: 8px 8px 0px 0px;
+        color: var(--header-text) !important;
+        padding: 0 20px;
         border: none;
+        transition: all 0.3s ease;
     }
     
     .stTabs [aria-selected="true"] {
@@ -90,7 +115,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Premium Header Setup
+# Refined Header Setup
 st.markdown("""
     <div class="main-header">
         <div class="header-title">📈 Indian Equities Analytics</div>
