@@ -13,32 +13,35 @@ This project performs an end-to-end financial analysis of **five major Indian st
 - **Performance Metrics** — Annualized returns, Sharpe Ratio, and Beta (systematic risk vs. NIFTY 50).
 - **Time-Series Forecasting** — ARIMA (1,0,1) model for short-term return predictions with stationarity testing (ADF test).
 - **Return Distribution Analysis** — Log return distribution with KDE overlay for normality assessment.
+- **Automated Testing** — Unit and integration tests using Pytest with Streamlit's `AppTest` framework.
 
 ### 📊 Stocks Analyzed
 
-| Company       | NSE Ticker     |
-|---------------|----------------|
-| HDFC Bank     | `HDFCBANK.NS`  |
-| Infosys       | `INFY.NS`      |
-| ITC           | `ITC.NS`       |
-| Reliance      | `RELIANCE.NS`  |
-| TCS           | `TCS.NS`       |
+| Company       | NSE Ticker     | Sector              |
+|---------------|----------------|----------------------|
+| HDFC Bank     | `HDFCBANK.NS`  | Banking & Finance    |
+| Infosys       | `INFY.NS`      | Information Technology |
+| ITC           | `ITC.NS`       | FMCG & Diversified  |
+| Reliance      | `RELIANCE.NS`  | Conglomerate         |
+| TCS           | `TCS.NS`       | Information Technology |
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Technology     | Purpose                                      |
-|----------------|----------------------------------------------|
-| **Python**     | Core programming language                    |
-| **Streamlit**  | Interactive web dashboard                    |
-| **yfinance**   | Real-time & historical stock data from Yahoo Finance |
-| **Pandas**     | Data manipulation & analysis                 |
-| **NumPy**      | Numerical computations                       |
-| **Matplotlib** | Static chart visualizations                  |
-| **Seaborn**    | Statistical data visualizations              |
-| **Statsmodels**| OLS regression (Beta), ADF test, ARIMA model |
-| **Pytest**     | Unit & integration testing                   |
+| Technology      | Purpose                                              |
+|-----------------|------------------------------------------------------|
+| **Python 3.x**  | Core programming language                            |
+| **Streamlit**   | Interactive web dashboard                            |
+| **yfinance**    | Real-time & historical stock data from Yahoo Finance |
+| **Pandas**      | Data manipulation & analysis                         |
+| **NumPy**       | Numerical computations                               |
+| **Matplotlib**  | Static chart visualizations                          |
+| **Seaborn**     | Statistical data visualizations                      |
+| **Statsmodels** | OLS regression (Beta), ADF test, ARIMA model         |
+| **Plotly**      | Interactive chart visualizations                     |
+| **Pytest**      | Unit & integration testing                           |
+| **pytest-mock** | Mocking support for test isolation                   |
 
 ---
 
@@ -49,17 +52,16 @@ Financial-Market-Trend-Risk-Analysis-Business-Analytics-Project-/
 │
 ├── app.py                      # Streamlit dashboard application
 ├── infosys_code.py             # Standalone Infosys analysis script
-├── requirements.txt            # Python dependencies
 ├── test_app.py                 # Unit & integration tests (pytest)
+├── requirements.txt            # Python dependencies
 ├── BA_report.pdf               # Business Analytics project report
+├── README.md                   # Project documentation
 │
 ├── HDFC_Analysis.ipynb         # Jupyter Notebook — HDFC Bank analysis
 ├── ITCAnalysis (2).ipynb       # Jupyter Notebook — ITC analysis
 ├── Reliance Analysis.ipynb     # Jupyter Notebook — Reliance analysis
 ├── TCS_Analysis .ipynb         # Jupyter Notebook — TCS analysis
-├── infosys_analysis.ipynb      # Jupyter Notebook — Infosys analysis
-│
-└── README.md                   # Project documentation
+└── infosys_analysis.ipynb      # Jupyter Notebook — Infosys analysis
 ```
 
 ---
@@ -98,7 +100,7 @@ Financial-Market-Trend-Risk-Analysis-Business-Analytics-Project-/
 
 ## 📊 Dashboard Features
 
-The interactive Streamlit dashboard (`app.py`) provides:
+The interactive Streamlit dashboard (`app.py`) provides a premium, responsive UI with custom styling and animated transitions.
 
 ### Sidebar Controls
 - **Stock Selector** — Choose from HDFC Bank, Infosys, ITC, Reliance, or TCS.
@@ -107,7 +109,7 @@ The interactive Streamlit dashboard (`app.py`) provides:
 
 ### KPI Metrics Row
 | Metric              | Description                                              |
-|----------------------|----------------------------------------------------------|
+|----------------------|----------------------------------------------------------| 
 | **Annual Return**    | Annualized log return (mean daily × 252)                 |
 | **Annual Volatility**| Annualized standard deviation of log returns             |
 | **Sharpe Ratio**     | Risk-adjusted return (excess return / volatility)        |
@@ -128,27 +130,38 @@ The interactive Streamlit dashboard (`app.py`) provides:
 
 Individual stock analyses are available as Jupyter Notebooks for detailed, step-by-step exploration:
 
-- `HDFC_Analysis.ipynb` — HDFC Bank deep dive
-- `ITCAnalysis (2).ipynb` — ITC deep dive
-- `Reliance Analysis.ipynb` — Reliance Industries deep dive
-- `TCS_Analysis .ipynb` — TCS deep dive
-- `infosys_analysis.ipynb` — Infosys deep dive
+| Notebook                     | Stock               | Contents                                                      |
+|------------------------------|----------------------|---------------------------------------------------------------|
+| `HDFC_Analysis.ipynb`        | HDFC Bank            | Data download, returns, volatility, beta, VaR, ARIMA, drawdown |
+| `ITCAnalysis (2).ipynb`      | ITC                  | Data download, returns, volatility, beta, VaR, ARIMA, drawdown |
+| `Reliance Analysis.ipynb`    | Reliance Industries  | Data download, returns, volatility, beta, VaR, ARIMA, drawdown |
+| `TCS_Analysis .ipynb`        | TCS                  | Data download, returns, volatility, beta, VaR, ARIMA, drawdown |
+| `infosys_analysis.ipynb`     | Infosys              | Data download, returns, volatility, beta, VaR, ARIMA, drawdown |
 
 Each notebook covers: data download, return calculations, volatility analysis, beta estimation, VaR, ARIMA forecasting, drawdown, and cumulative returns.
+
+Additionally, `infosys_code.py` provides a standalone Python script for the complete Infosys analysis pipeline, including **pyfolio** tear sheet generation for enhanced portfolio analytics.
 
 ---
 
 ## 🧪 Testing
 
-The project includes comprehensive tests in `test_app.py`:
+The project includes comprehensive tests in `test_app.py` using **pytest** with mocked `yfinance` data for offline, reproducible testing:
 
-- **`test_load_data()`** — Validates stock data loading, column creation (`simple_return`, `log_return`), and return calculations.
-- **`test_load_market()`** — Validates NIFTY 50 market data loading and `market_return` column computation.
-- **`test_streamlit_app_renders()`** — Full integration test using Streamlit's `AppTest` framework — verifies the dashboard renders without exceptions and displays all 5 KPI metrics.
+| Test                            | Type        | Description                                                                    |
+|---------------------------------|-------------|--------------------------------------------------------------------------------|
+| `test_load_data()`              | Unit        | Validates stock data loading, column creation (`simple_return`, `log_return`), and return calculations |
+| `test_load_market()`            | Unit        | Validates NIFTY 50 market data loading and `market_return` column computation  |
+| `test_streamlit_app_renders()`  | Integration | Full integration test using Streamlit's `AppTest` framework — verifies the dashboard renders without exceptions and displays all 5 KPI metrics |
 
-Run tests with:
+### Running Tests
+
 ```bash
+# Run all tests with verbose output
 pytest test_app.py -v
+
+# Run a specific test
+pytest test_app.py::test_load_data -v
 ```
 
 ---
@@ -166,6 +179,30 @@ pytest test_app.py -v
 | **Maximum Drawdown**     | Largest peak-to-trough cumulative return decline                           |
 | **ADF Test**             | Augmented Dickey-Fuller test for stationarity of return series              |
 | **ARIMA(1,0,1)**         | AutoRegressive Integrated Moving Average model for return forecasting      |
+
+---
+
+## 📦 Dependencies
+
+All dependencies are listed in `requirements.txt`:
+
+```
+streamlit
+yfinance
+pandas
+numpy
+matplotlib
+seaborn
+statsmodels
+plotly
+pytest
+pytest-mock
+```
+
+Install all at once:
+```bash
+pip install -r requirements.txt
+```
 
 ---
 
