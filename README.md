@@ -67,6 +67,13 @@ Financial-Market-Trend-Risk-Analysis-Business-Analytics-Project-/
 ---
 
 ## 🚀 Getting Started
+## 🌐 Live Demo
+
+🚀 Experience the interactive dashboard live:
+
+👉 https://quantedgebusiness.streamlit.app/
+
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://quantedgebusiness.streamlit.app/)
 
 ### Prerequisites
 
